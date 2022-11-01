@@ -4,11 +4,10 @@
 
 
 <div class="container-fluid">
-    <div class="row ml-10">
-        <h1>Products Catalog</h1>
-    </div>
+
 
     <div class="container">
+        <h1>Products Catalog</h1>
         @if(sizeof($products) > 0)
         <div class="row">
             @foreach($products as $product)

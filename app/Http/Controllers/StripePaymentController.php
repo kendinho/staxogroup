@@ -26,7 +26,7 @@ class StripePaymentController extends Controller
         ]);
 
         $buyer = Buyer::create($request->all());
-        return redirect()->route('go-to-payment', [
+        return to_route('go-to-payment', [
             'id' => $buyer->id,
             'product' => $product,
             'price' => $price
