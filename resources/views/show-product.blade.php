@@ -9,7 +9,7 @@
     <div class="card">
         <img class="card-img-top mx-10" height="400px" width="80%" src="{{$product->image}}" alt="Card image cap">
         <div class="card-body">
-            <p class="card-title">Price: {{env('CURRENCY') . number_format($product->price,2)}}</p>
+            <p class="card-title">Price: {{config('app.currency') . number_format($product->price,2)}}</p>
             <a href="{{route('catalog')}}" class="btn btn-primary">Go Back</a>
         </div>
     </div>

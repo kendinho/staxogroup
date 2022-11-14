@@ -17,7 +17,7 @@
     </div>
     @endif
 
-    <form method="POST" action="{{route('store-buyer',[$product,$price])}}">
+    <form method="POST" action="{{route('store-buyer',[$product->id])}}">
         @csrf
         <div class="form-group">
             <label for="buyerName">Buyer Name</label>

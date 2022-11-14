@@ -33,7 +33,7 @@
                             <tr>
                                 <td><img src="{{$product->image}}" height="80px" width="80px" alt=""></td>
                                 <td>{{$product->name}}</td>
-                                <td>{{env('CURRENCY') . number_format($product->price,2)}}</td>
+                                <td>{{config('app.currency') . number_format($product->price,2)}}</td>
                                 <td><a class="btn btn-primary" href="{{route('product.edit',['product' => $product->id])}}">Edit</a></td>
                                 <td>
                                     <!-- <a class="btn btn-danger" href="{{route('product.destroy',['product' => $product->id])}}" onclick="return confirm('Are you sure?')">Delete</a> -->

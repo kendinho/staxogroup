@@ -14,19 +14,19 @@
         @endif
         <div class="form-group">
             <label for="productName">Product Name</label>
-            <input type="text" name="name" class="form-control" id="productName" aria-describedby="productName" placeholder="Enter Product Name" value="{{isset($product) ? $product->name :''}}">
+            <input type="text" name="name" class="form-control" id="productName" aria-describedby="productName" placeholder="Enter Product Name" value="{{isset($product) ? $product->name : (old('name') ? old('name') : '')}}">
             <small id="productName" class="form-text text-muted">Kindly enter a descriptive name for the product</small>
         </div>
 
         <div class="form-group">
-            <label for="productPrice">Product Price in {{env('CURRENCY')}}</label>
-            <input type="text" name="price" class="form-control" id="productPrice" placeholder="Enter Product Price" value="{{isset($product) ? number_format($product->price,2) :''}}">
+            <label for="productPrice">Product Price in {{config('app.currency')}}</label>
+            <input type="text" name="price" class="form-control" id="productPrice" placeholder="Enter Product Price" value="{{isset($product) ? number_format($product->price,2) : (old('price') ? old('price') : '')}}">
         </div>
 
         <div class="form-group">
             <label for="productImage">Product Image</label>
             @if(isset($product))
-            <img src="{{$product->image}}"><br>
+            <img src="{{ $product->image }}"><br>
             @endif
             <input type="file" name="image" class="form-control-file" id="productImage">
         </div>

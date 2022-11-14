@@ -30,7 +30,7 @@ class PaymentReceivedConfirmation
     public function handle(PaymentReceived $event)
     {
         //send email confirmation
-        Mail::to('adubyte2@yahoo.com')->send(new PaymentConfirmation($event->buyer, $event->product, $event->price));
+        Mail::to($event->buyer->email)->send(new PaymentConfirmation($event->buyer, $event->product, $event->price));
         ChargeTheSecondHalfPayment::dispatchIf($event->paymentMethod, $event->buyer, $event->product, $event->price, $event->paymentMethod)->delay(now()->addMinutes(5));
     }
 }

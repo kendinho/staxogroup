@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="container">
-    <form action="{{route('process-payment', [$product, $price])}}" method="POST" id="subscribe-form">
+    <form action="{{route('process-payment', [$product->id])}}" method="POST" id="subscribe-form">
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4">
                     <div class="subscription-option">
                         <label for="plan-silver">
-                            <span class="plan-price">Product / Item: {{strtoupper($product)}} &nbsp; | &nbsp; Price: {{env('CURRENCY') . number_format($price,2)}}</span>
+                            <span class="plan-price">Product / Item: {{strtoupper($product->name)}} &nbsp; | &nbsp; Price: {{config('app.currency') . number_format($product->price,2)}}</span>
                         </label>
                     </div>
                 </div>

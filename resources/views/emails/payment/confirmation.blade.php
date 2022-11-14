@@ -9,7 +9,7 @@ This is a confirmation that your payment has been received as follows:
 @component('mail::table')
 | Product | Price | Status |
 | :------------- |:-------------:| --------:|
-| {{$product}} | {!! env('CURRENCY') . number_format($price,2) !!} | Paid |
+| {{$product}} | {!! config('app.currency') . number_format($price,2) !!} | Paid |
 
 @endcomponent
 

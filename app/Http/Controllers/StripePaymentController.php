@@ -5,20 +5,20 @@ namespace App\Http\Controllers;
 use App\Events\PaymentReceived;
 use Illuminate\Http\Request;
 use App\Models\Buyer;
+use App\Models\Product;
 
 
 class StripePaymentController extends Controller
 
 {
-    public function collect_buyer_info(String $product, $price)
+    public function collect_buyer_info($id)
     {
         return view('collect-buyer-info', [
-            'product' => $product,
-            'price' => $price
+            'product' => Product::findorFail($id)
         ]);
     }
 
-    public function store_buyer(Request $request, String $product, $price)
+    public function store_buyer(Request $request, $id)
     {
         $request->validate([
             'name' => 'required | max:255',
@@ -26,28 +26,29 @@ class StripePaymentController extends Controller
         ]);
 
         $buyer = Buyer::create($request->all());
+
         return to_route('go-to-payment', [
             'id' => $buyer->id,
-            'product' => $product,
-            'price' => $price
+            'product_id' => $id
         ]);
     }
 
-    public function charge($id, String $product, $price)
+    public function charge($id, $product_id)
     {
         $buyer = Buyer::findorFail($id);
+        $product = Product::findorFail($product_id);
 
         return view('payment', [
             'buyer' => $buyer,
             'intent' => $buyer->createSetupIntent(),
-            'product' => $product,
-            'price' => $price
+            'product' => $product
         ]);
     }
 
-    public function process_payment(Request $request, String $product, $price)
+    public function process_payment(Request $request, $id)
     {
         $buyer = Buyer::findorFail($request->buyer_id);
+        $product = Product::findorFail($id);
 
         $paymentMethod = $request->input('payment_method');
 
@@ -58,12 +59,12 @@ class StripePaymentController extends Controller
         try {
 
             //Changing the initial payment to half the price
-            $price = round($price / 2);
+            $price = round($product->price / 2);
 
             $charge = $buyer->charge(($price * 100), $paymentMethod);
 
             if ($charge) {
-                event(new PaymentReceived($buyer, $product, $price, $paymentMethod));
+                event(new PaymentReceived($buyer, $product->name, $price, $paymentMethod));
             }
         } catch (\Exception $e) {
             return back()->withErrors(['message' => 'Error charging card. ' . $e->getMessage()]);

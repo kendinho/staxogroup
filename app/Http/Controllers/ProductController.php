@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -22,13 +23,9 @@ class ProductController extends Controller
         return view('manage-product');
     }
 
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'price' => 'required',
-            'image' => 'required|mimes:jpg,png,jpeg,gif,svg|max:2048'
-        ]);
+        $request->validated();
         $path = '/storage/';
 
         if ($request->hasFile('image')) {
@@ -49,8 +46,9 @@ class ProductController extends Controller
         return view('manage-product', ['product' => $product]);
     }
 
-    public function update(Request $request, $product)
+    public function update(ProductRequest $request, $product)
     {
+        $request->validated();
         $path = '/storage/';
 
         if ($request->hasFile('image')) {

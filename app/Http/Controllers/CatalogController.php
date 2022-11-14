@@ -9,7 +9,7 @@ class CatalogController extends Controller
 {
     public function index()
     {
-        return view('welcome', ['products' => Product::get()])->with('info', 'Some Info');
+        return view('welcome', ['products' => Product::get()]);
     }
 
     public function show($id)
